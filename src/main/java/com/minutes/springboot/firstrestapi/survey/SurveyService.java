@@ -79,11 +79,7 @@ public class SurveyService {
 		return question.getId();
 	}
 
-	private String generateRandomId() {
-		SecureRandom secureRandom = new SecureRandom();
-		String randomId = new BigInteger(32, secureRandom).toString();
-		return randomId;
-	}
+	
 	
 	public String deleteSurveyQuestion(String surveyId, String questionId) {
 		List<Question> surveyQuestions = retrieveAllSurveysQuestions(surveyId);	
@@ -94,6 +90,20 @@ public class SurveyService {
 		if(!removed) return null;
 		
 		return questionId;
+	}
+	
+	public void updateSurveyQuestion(String surveyId, String questionId, Question question) {
+		List<Question> questions = retrieveAllSurveysQuestions(surveyId);	
+		questions.removeIf(q -> q.getId().equalsIgnoreCase(questionId));
+		
+		questions.add(question);
+	}
+	
+	
+	private String generateRandomId() {
+		SecureRandom secureRandom = new SecureRandom();
+		String randomId = new BigInteger(32, secureRandom).toString();
+		return randomId;
 	}
 	
 		
